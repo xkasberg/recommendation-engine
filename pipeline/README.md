@@ -1,4 +1,4 @@
-# ML Training Pipeline
+# Two Tower Model Training Pipeline
 
 ## Training with Weights & Biases
 
