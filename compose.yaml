@@ -48,7 +48,5 @@ services:
 #         ls -lh /app/artifacts
 #       "
 
-
-
 # volumes:
 #   artifacts: {}

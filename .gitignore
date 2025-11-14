@@ -7,6 +7,7 @@ __pycache__/
 env/
 venv/
 .venv/
+AGENTS.md
 
 # Tool caches
 .pytest_cache/

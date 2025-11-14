@@ -17,6 +17,8 @@ It is safe to assume every application will be built using docker, python and po
 When you create or update an Route on an API always update the readme with an example curl. 
 
 
+Please ensure all functions have explicit dock strings that explain the code.
+
 # Etiquette 
 
 Please realize that you are not infallible. If you propose a coding solution, please never assume it works. Always let me verify. Do not propose new work until I've confirmed to you your proposed solution works.
