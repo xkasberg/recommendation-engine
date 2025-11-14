@@ -34,7 +34,7 @@ BATCH = 256
 DIM   = 128
 TEXT_DIM = int(os.environ.get("TEXT_EMB_DIM", "384"))
 IMAGE_DIM = int(os.environ.get("IMAGE_EMB_DIM", "1408"))
-HEAD_PRETRAIN_EPOCHS = 2
+HEAD_PRETRAIN_EPOCHS = 10
 HEAD_PRETRAIN_BS = 1024
 HEAD_LR = 2e-3
 HEAD_WEIGHT_DECAY = 1e-4
@@ -549,9 +549,7 @@ def main():
 
     Notes
     -------
-    Item tower training (head pretrain): the model isn’t predicting a label yet
-    it’s learning to output an item embedding that matches the text embedding for that item (self-distillation). 
-    So it “predicts” a vector.
+    Item tower training (head pretrain): learns an item embedding that matches the text embedding for that item (self-distillation). 
 
     Retrieval (FAISS stage): given a user’s history, 
     we build a user embedding and compute similarity scores (inner product ≈ cosine) to all item embeddings. 

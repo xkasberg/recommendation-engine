@@ -16,7 +16,7 @@ services:
       VERTEX_AI_API_KEY: ${VERTEX_AI_API_KEY}
       GCP_PROJECT_ID: ${GCP_PROJECT_ID}
     volumes:
-      - ./api:/app/api                 # hot reload your API code  # read trained artifacts
+      - ./api:/app/api
     ports:
       - "8080:8080"
     command: >
@@ -24,29 +24,30 @@ services:
       --host 0.0.0.0 --port 8080
       --reload
 
-#   pipeline:
-#     platform: linux/amd64
-#     build:
-#       context: .
-#       dockerfile: pipeline/Dockerfile
-#     image: plush-pipeline:latest
-#     container_name: plush-pipeline
-#     environment:
-#       ARTIFACTS_DIR: /app/artifacts
-#       # make src importable so we can run modules with -m
-#       PYTHONPATH: /app/pipeline/src
-#       WANDB_API_KEY: ${WANDB_API_KEY}
-#       VERTEX_AI_API_KEY: ${VERTEX_AI_API_KEY}
-#       GCP_PROJECT_ID: ${GCP_PROJECT_ID}
-#     volumes:
-#       - artifacts:/app/artifacts     # write trained artifacts here
-#     # Run once and exit (generate artifacts)
-#     command: >
-#       bash -lc "
-#         python -m data_prep &&
-#         python -m train &&
-#         ls -lh /app/artifacts
-#       "
+  pipeline:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: pipeline/Dockerfile
+    image: plush-pipeline:latest
+    container_name: plush-pipeline
+    environment:
+      ARTIFACTS_DIR: /app/artifacts
+      # make src importable so we can run modules with -m
+      PYTHONPATH: /app/pipeline/src
+      WANDB_API_KEY: ${WANDB_API_KEY}
+      VERTEX_AI_API_KEY: ${VERTEX_AI_API_KEY}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
+      WATCHFILES_FORCE_POLLING: "1"
+      WATCHFILES_POLLING_INTERVAL: "0.5"
+      WANDB_MODEL_ARTIFACT: ${WANDB_MODEL_ARTIFACT}
+      WANDB_PROJECT: ${WANDB_PROJECT}
 
-# volumes:
-#   artifacts: {}
+    # write trained artifacts here
+    # Run once and exit (generate artifacts)
+    command: >
+      bash -lc "
+        python -m data_prep &&
+        python -m train &&
+        ls -lh /app/artifacts
+      "
