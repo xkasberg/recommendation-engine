@@ -9,8 +9,6 @@ from joblib import dump
 
 import wandb
 
-#import faiss
-
 import numpy as np
 import pandas as pd
 
@@ -20,9 +18,7 @@ import torch, torch.nn.functional as F
 
 from torch.utils.data import Dataset
 
-#from sentence_transformers import SentenceTransformer
-
-from src.towers import ItemTower #UserAux, info_nce_loss
+from src.towers import ItemTower
 
 ROOT   = pathlib.Path(__file__).parents[2]
 ART    = ROOT / "artifacts"
@@ -121,12 +117,6 @@ def concat_text(row):
         pieces.append("BrandIntro: " + row["introduction"].split(".")[0])
     return " ".join(pieces)
 
-
-# def build_text_embeddings(items: pd.DataFrame, model_name="sentence-transformers/all-MiniLM-L6-v2"):
-#     model = SentenceTransformer(model_name, device="cpu")
-#     texts = items.apply(concat_text, axis=1).tolist()
-#     embs  = model.encode(texts, batch_size=256, show_progress_bar=True, device="cpu", convert_to_numpy=True, normalize_embeddings=False)
-#     return embs, model.get_sentence_embedding_dimension()
 
 def build_text_embeddings(
     items: pd.DataFrame,
@@ -257,6 +247,7 @@ def prepare_tensors(items: pd.DataFrame, maps: dict, text_emb: np.ndarray):
         torch.tensor(color_id, dtype=torch.long),
         torch.tensor(price_oneh, dtype=torch.float32)
     )
+
 
 class PairDataset(Dataset):
     """

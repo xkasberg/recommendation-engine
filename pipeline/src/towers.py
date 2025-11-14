@@ -30,24 +30,3 @@ class ItemTower(nn.Module):
                        self.price_lin(price_oneh)], dim=-1)
         z = self.mlp(x)
         return F.normalize(z, p=2, dim=-1)
-
-# class UserAux(nn.Module):
-#     """Optional small net over interpretable facets."""
-#     def __init__(self, facet_dim: int, d: int = 128):
-#         super().__init__()
-#         self.net = nn.Sequential(nn.Linear(facet_dim, 64),
-#                                  nn.ReLU(),
-#                                  nn.Linear(64, d))
-
-#     def forward(self, facets):
-#         return F.normalize(self.net(facets), p=2, dim=-1)
-
-# def info_nce_loss(user_vec, pos_item_vec, temperature: float = 20.0):
-#     """
-#     In-batch negatives: sim = user_vec @ pos_item_vec^T
-#     """
-#     user_vec = F.normalize(user_vec, p=2, dim=-1)
-#     pos_item_vec = F.normalize(pos_item_vec, p=2, dim=-1)
-#     sim = user_vec @ pos_item_vec.T  # [B,B]
-#     labels = torch.arange(sim.size(0), device=sim.device)
-#     return F.cross_entropy(sim * temperature, labels)

@@ -219,7 +219,6 @@ def _vertex_text_embeddings(items: pd.DataFrame) -> Tuple[np.ndarray, int, Dict[
     return asyncio.run(_vertex_text_embeddings_async(items))
 
 
-
 def fetch_image_bytes(url: str, timeout: float = 10.0) -> Optional[bytes]:
     if not url:
         return None
