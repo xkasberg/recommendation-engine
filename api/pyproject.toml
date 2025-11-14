@@ -1,0 +1,22 @@
+[project]
+name = "api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "faiss-cpu>=1.12.0",
+    "fastapi[standard]>=0.121.1",
+    "fastparquet>=2024.11.0",
+    "joblib>=1.5.2",
+    "numpy==1.26.4",
+    "pandas>=2.3.3",
+    "pyarrow>=22.0.0",
+    "pydantic>=2.12.4",
+    "ruff>=0.14.4",
+    "scikit-learn>=1.7.2",
+    "torch==1.13.1",
+    "uvicorn>=0.38.0",
+    "wandb>=0.22.3",
+    "weave>=0.52.16",
+]

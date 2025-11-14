@@ -1,0 +1,43 @@
+# Python / build
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Tool caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.tox/
+.benchmarks/
+
+# Dependency/lock artifacts
+*.lock
+poetry.lock
+Pipfile.lock
+uv.lock
+
+# Local configuration
+.DS_Store
+.idea/
+.vscode/
+.env
+
+# Project-specific
+artifacts/
+pipeline/artifacts/
+pipeline/src/data/
+pipeline/wandb/
+api/.venv/
+**/wandb/**
+*.parquet
+*.npy
+*.pt
+*.joblib
+*.index
+embedding_meta.json

@@ -1,0 +1,54 @@
+services:
+  api:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    image: plush-api:latest
+    container_name: plush-api
+    environment:
+      WATCHFILES_FORCE_POLLING: "1"
+      WATCHFILES_POLLING_INTERVAL: "0.5"
+      ARTIFACTS_DIR: /app/artifacts
+      WANDB_API_KEY: ${WANDB_API_KEY}
+      WANDB_MODEL_ARTIFACT: ${WANDB_MODEL_ARTIFACT}
+      WANDB_PROJECT: ${WANDB_PROJECT}
+      VERTEX_AI_API_KEY: ${VERTEX_AI_API_KEY}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
+    volumes:
+      - ./api:/app/api                 # hot reload your API code  # read trained artifacts
+    ports:
+      - "8080:8080"
+    command: >
+      fastapi run src/main.py
+      --host 0.0.0.0 --port 8080
+      --reload
+
+#   pipeline:
+#     platform: linux/amd64
+#     build:
+#       context: .
+#       dockerfile: pipeline/Dockerfile
+#     image: plush-pipeline:latest
+#     container_name: plush-pipeline
+#     environment:
+#       ARTIFACTS_DIR: /app/artifacts
+#       # make src importable so we can run modules with -m
+#       PYTHONPATH: /app/pipeline/src
+#       WANDB_API_KEY: ${WANDB_API_KEY}
+#       VERTEX_AI_API_KEY: ${VERTEX_AI_API_KEY}
+#       GCP_PROJECT_ID: ${GCP_PROJECT_ID}
+#     volumes:
+#       - artifacts:/app/artifacts     # write trained artifacts here
+#     # Run once and exit (generate artifacts)
+#     command: >
+#       bash -lc "
+#         python -m data_prep &&
+#         python -m train &&
+#         ls -lh /app/artifacts
+#       "
+
+
+
+# volumes:
+#   artifacts: {}
